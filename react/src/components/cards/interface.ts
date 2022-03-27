@@ -1,6 +1,6 @@
 import React from 'react';
-import IData from '../../source/interface';
+import { IItem } from '../../source/interface';
 
 export default interface ICards {
-  dataCards: IData[];
+  dataCards: IItem[];
 }

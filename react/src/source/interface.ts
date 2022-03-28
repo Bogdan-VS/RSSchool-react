@@ -8,4 +8,5 @@ export interface IItem {
   description: string;
   actors: string;
   image: string;
+  id: number;
 }

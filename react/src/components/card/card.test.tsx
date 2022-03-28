@@ -10,6 +10,7 @@ const testData: IItem = {
   description: 'description',
   actors: 'actors',
   image: 'image',
+  id: 100,
 };
 
 describe('Card', () => {

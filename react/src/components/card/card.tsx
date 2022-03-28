@@ -8,7 +8,7 @@ export default class Card extends Component<IData> {
     const { name, info, description, actors, image }: IItem = this.props.item as IItem;
 
     return (
-      <div className="item-wrapper">
+      <div className="item-wrapper" data-testid="card">
         <div
           className="item-img"
           style={{

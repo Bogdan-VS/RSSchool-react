@@ -1,12 +1,12 @@
 import { Component } from 'react';
 
 import data from '../../source/data';
-import IData, { IItem } from '../../source/interface';
+import { IItem } from '../../source/interface';
 import ICards from './interface';
 import './cards.css';
 import Card from '../card';
 
-export default class Cards extends Component {
+export default class Cards extends Component<ICards> {
   state = {
     dataCards: data,
   };
@@ -14,8 +14,8 @@ export default class Cards extends Component {
   render() {
     const { dataCards }: ICards = this.state;
 
-    const items = dataCards.map((item: IItem, index: number) => {
-      return <Card item={item} key={index} />;
+    const items = dataCards.map((item: IItem) => {
+      return <Card item={item} key={item.id} />;
     });
 
     return <div className="cards-wrapper">{items}</div>;

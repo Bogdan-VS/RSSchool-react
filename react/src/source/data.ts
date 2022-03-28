@@ -14,6 +14,7 @@ const data: IItem[] = [
       'After accidentally crash-landing in 2022, time-traveling fighter pilot Adam Reed teams up with his 12-year-old self on a mission to save the future.',
     actors: 'Starring: Ryan Reynolds, Mark Ruffalo, Jennifer Garner',
     image: `${img1}`,
+    id: 100,
   },
   {
     name: 'Red Notice',
@@ -22,6 +23,7 @@ const data: IItem[] = [
       'Wayward Prince Hal must turn from carouser to warrior king as he faces hostilities from inside and outside the castle walls in the battle for England.',
     actors: 'Starring: Timothée Chalamet, Joel Edgerton, Robert Pattinson',
     image: `${img2}`,
+    id: 101,
   },
   {
     name: 'The King',
@@ -30,6 +32,7 @@ const data: IItem[] = [
       'After accidentally crash-landing in 2022, time-traveling fighter pilot Adam Reed teams up with his 12-year-old self on a mission to save the future.',
     actors: 'Starring:Ryan Reynolds, Mark Ruffalo, Jennifer Garner',
     image: `${img3}`,
+    id: 102,
   },
   {
     name: 'Outlaw King',
@@ -38,6 +41,7 @@ const data: IItem[] = [
       "In 14th-century Scotland, Robert the Bruce claims the crown and leads a fierce uprising to win back the country's independence from English rule.",
     actors: 'Starring:Chris Pine, Aaron Taylor-Johnson, Florence Pugh',
     image: `${img4}`,
+    id: 103,
   },
   {
     name: 'Against The Ice',
@@ -46,6 +50,7 @@ const data: IItem[] = [
       "Exploring Greenland's vast landscape for a lost map, two men must fight to survive. Based on the true story of Denmark's 1909 polar expedition.",
     actors: 'Starring:Nikolaj Coster-Waldau, Joe Cole, Heida Reed',
     image: `${img5}`,
+    id: 104,
   },
   {
     name: 'Fatherhood',
@@ -54,6 +59,7 @@ const data: IItem[] = [
       'A widowed new dad copes with doubts, fears, heartache and dirty diapers as he sets out to raise his daughter on his own. Inspired by a true story.',
     actors: 'Starring:Kevin Hart, Alfre Woodard, Lil Rel Howery',
     image: `${img6}`,
+    id: 105,
   },
 ];
 

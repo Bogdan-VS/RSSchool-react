@@ -1,10 +1,8 @@
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Card from './';
+import Card from './card';
 
-import data from '../../source/data';
 import { IItem } from '../../source/interface';
-
-// const { name, info, description, actors, image } = data[0];
 
 const testData: IItem = {
   name: 'name',
@@ -20,7 +18,6 @@ describe('Card', () => {
   });
 
   it('should renders name', () => {
-    screen.debug();
     expect(screen.getByText(`${testData.name}`)).toBeInTheDocument();
   });
 

@@ -6,6 +6,7 @@ import Header from '../header';
 import AboutUs from '../about-us';
 import MainPage from '../main-page';
 import Errors from '../error';
+import Form from '../form';
 
 export default class App extends Component {
   render() {
@@ -16,6 +17,7 @@ export default class App extends Component {
           <Route path="/" element={<MainPage />} />
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="*" element={<Errors />} />
+          <Route path="/form" element={<Form />} />
         </Routes>
       </div>
     );

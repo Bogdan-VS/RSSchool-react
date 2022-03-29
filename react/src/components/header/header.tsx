@@ -18,6 +18,9 @@ export default class Header extends Component {
           <Link to={Pages.error} className="nav-item">
             404
           </Link>
+          <Link to={Pages.form} className="nav-item">
+            Form
+          </Link>
         </nav>
       </header>
     );

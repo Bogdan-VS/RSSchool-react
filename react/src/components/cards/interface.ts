@@ -1,6 +1,5 @@
-import React from 'react';
 import { IItem } from '../../source/interface';
 
-export default interface ICards {
+export interface ICards {
   dataCards?: IItem[];
 }

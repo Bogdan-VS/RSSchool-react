@@ -1,11 +1,15 @@
-import { ChangeEvent, Component } from 'react';
+import React, { ChangeEvent, Component } from 'react';
 
-import './search.css';
+import styles from './Search.module.scss';
 
-export default class Search extends Component {
+const { wrapper, item, btn } = styles;
+
+export class Search extends Component {
   state = {
     label: '',
   };
+
+  static searchInput = React.createRef<HTMLInputElement>();
 
   search = (e: ChangeEvent) => {
     this.setState({
@@ -15,9 +19,9 @@ export default class Search extends Component {
 
   componentDidMount() {
     const label = localStorage.getItem('label');
+    const searchText = Search.searchInput.current;
 
-    if (label) {
-      const searchText = document.getElementById('search') as HTMLInputElement;
+    if (label && searchText) {
       searchText.value = label;
     }
   }
@@ -31,15 +35,16 @@ export default class Search extends Component {
   render() {
     return (
       <form action="search">
-        <div className="search-wrapper">
+        <div className={wrapper}>
           <input
-            className="search-item"
+            className={item}
             type="search"
             name="search"
             id="search"
             onChange={this.search}
+            ref={Search.searchInput}
           />
-          <button className="search-btn">Search</button>
+          <button className={btn}>Search</button>
         </div>
       </form>
     );

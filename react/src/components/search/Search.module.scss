@@ -1,4 +1,4 @@
-.search-wrapper {
+.wrapper {
   display: flex;
   column-gap: 20px;
   max-width: 340px;
@@ -9,7 +9,7 @@
   border-radius: 10px;
 }
 
-.search-item {
+.item {
   width: 300px;
   height: 35px;
   border-radius: 6px;
@@ -18,14 +18,13 @@
   background-color: #d3d3d3;
 }
 
-.search-item:focus {
+.item:focus {
   border: 2px solid #ffffff;
-  /* box-shadow: 0px 0px 3px 2px #ffffff9c; */
   border-radius: 4px;
   outline: none;
 }
 
-.search-btn {
+.btn {
   width: 70px;
   border-radius: 6px;
   border: none;
@@ -35,7 +34,7 @@
   transition: 0.3s;
 }
 
-.search-btn:hover {
+.btn:hover {
   background-color: #d3d3d3;
   color: #586671;
 }

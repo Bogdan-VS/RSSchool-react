@@ -1,8 +1,10 @@
 import { ChangeEvent, Component } from 'react';
 
-import './search.css';
+import styles from './Search.module.scss';
 
-export default class Search extends Component {
+const { wrapper, item, btn } = styles;
+
+export class Search extends Component {
   state = {
     label: '',
   };
@@ -31,15 +33,15 @@ export default class Search extends Component {
   render() {
     return (
       <form action="search">
-        <div className="search-wrapper">
+        <div className={wrapper}>
           <input
-            className="search-item"
+            className={item}
             type="search"
             name="search"
             id="search"
             onChange={this.search}
           />
-          <button className="search-btn">Search</button>
+          <button className={btn}>Search</button>
         </div>
       </form>
     );

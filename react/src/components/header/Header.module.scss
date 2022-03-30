@@ -6,19 +6,19 @@ header {
   border-bottom: 1px solid #faebd734;
 }
 
-.header-nav {
+.nav {
   display: flex;
   column-gap: 50px;
   font-size: 20px;
 }
 
-.nav-item {
+.navItem {
   text-decoration: none;
   color: #d3d3d3;
   transition: 0.3s;
   cursor: pointer;
 }
 
-.nav-item:hover {
+.navItem:hover {
   opacity: 0.7;
 }

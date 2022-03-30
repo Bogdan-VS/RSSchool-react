@@ -1,25 +1,28 @@
 import { Component } from 'react';
 import IData, { IItem } from '../../source/interface';
 
-import './card.css';
+import style from './Card.module.scss';
 
-export default class Card extends Component<IData> {
+const { wrapper, img, textWrapper } = style;
+
+export class Card extends Component<IData> {
   render() {
-    const { name, info, description, actors, image }: IItem = this.props.item as IItem;
+    const { name, info, description, actors, image }: IItem = this.props
+      .item as IItem;
 
     return (
-      <div className="item-wrapper" data-testid="card">
+      <div className={wrapper} data-testid="card">
         <div
-          className="item-img"
+          className={img}
           style={{
             background: `top 0 left 0 / 100% 100% url(${image})`,
           }}
         ></div>
-        <div className="text-wrapper">
-          <h4 className="item-title">{name}</h4>
-          <p className="item-info">{info}</p>
-          <p className="item-description">{description}</p>
-          <p className="item-actor">{actors}</p>
+        <div className={textWrapper}>
+          <h4>{name}</h4>
+          <p>{info}</p>
+          <p>{description}</p>
+          <p>{actors}</p>
         </div>
       </div>
     );

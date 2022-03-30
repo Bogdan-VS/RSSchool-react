@@ -1,12 +1,13 @@
 import { Component } from 'react';
-
 import data from '../../source/data';
 import { IItem } from '../../source/interface';
 import ICards from './interface';
-import './cards.css';
-import Card from '../card';
+import styles from './Cards.module.scss';
+import { Card } from '../Card';
 
-export default class Cards extends Component<ICards> {
+const { wrapper } = styles;
+
+export class Cards extends Component<ICards> {
   state = {
     dataCards: data,
   };
@@ -18,6 +19,6 @@ export default class Cards extends Component<ICards> {
       return <Card item={item} key={item.id} />;
     });
 
-    return <div className="cards-wrapper">{items}</div>;
+    return <div className={wrapper}>{items}</div>;
   }
 }

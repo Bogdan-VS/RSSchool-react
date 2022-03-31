@@ -1,4 +1,4 @@
-import { IItem } from './interface';
+import { ICard } from './interface';
 import img1 from '../image/1.jpg';
 import img2 from '../image/2.jpg';
 import img3 from '../image/3.jpg';
@@ -6,7 +6,7 @@ import img4 from '../image/4.jpg';
 import img5 from '../image/5.jpg';
 import img6 from '../image/6.jpg';
 
-const data: IItem[] = [
+const data: ICard[] = [
   {
     name: 'The Adam Project',
     info: '2022 | 13+ | 1h 46m | Comedies',

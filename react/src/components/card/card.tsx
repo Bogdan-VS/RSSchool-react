@@ -1,21 +1,13 @@
 import { Component } from 'react';
+import IItems, { ICard } from '../../source/interface';
 
 import styles from './Card.module.scss';
 
 const { wrapper, img, textWrapper } = styles;
 
-type CardProps = {
-  name: string;
-  info: string;
-  description: string;
-  actors: string;
-  image: string;
-  id: number;
-};
-
-export class Card extends Component<CardProps> {
+export class Card extends Component<IItems> {
   render() {
-    const { name, info, description, actors, image } = this.props;
+    const { name, info, description, actors, image } = this.props.item;
 
     return (
       <div className={wrapper} data-testid="card">

@@ -1,10 +1,9 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { Card } from './Card';
 
-import { IItem } from '../../source/interface';
+import { ICard } from '../../source/interface';
 
-const testData: IItem = {
+const testData: ICard = {
   name: 'name',
   info: 'info',
   description: 'description',
@@ -13,20 +12,11 @@ const testData: IItem = {
   id: 100,
 };
 
-const { name, info, description, image, actors, id } = testData;
+const { name, info, description, actors } = testData;
 
 describe('Card', () => {
   beforeEach(() => {
-    render(
-      <Card
-        name={name}
-        info={info}
-        description={description}
-        actors={actors}
-        image={image}
-        id={id}
-      />
-    );
+    render(<Card item={testData} />);
   });
 
   it('should renders name', () => {

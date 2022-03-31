@@ -1,5 +1,5 @@
-import { IItem } from '../../source/interface';
+import { ICard } from '../../source/interface';
 
 export interface ICards {
-  dataCards?: IItem[];
+  dataCards: ICard[];
 }

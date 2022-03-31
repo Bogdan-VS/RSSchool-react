@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import IItems, { ICard } from '../../source/interface';
+import IItems from '../../source/interface';
 
 import styles from './Card.module.scss';
 

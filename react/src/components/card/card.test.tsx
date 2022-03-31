@@ -13,24 +13,35 @@ const testData: IItem = {
   id: 100,
 };
 
+const { name, info, description, image, actors, id } = testData;
+
 describe('Card', () => {
   beforeEach(() => {
-    render(<Card item={testData} />);
+    render(
+      <Card
+        name={name}
+        info={info}
+        description={description}
+        actors={actors}
+        image={image}
+        id={id}
+      />
+    );
   });
 
   it('should renders name', () => {
-    expect(screen.getByText(`${testData.name}`)).toBeInTheDocument();
+    expect(screen.getByText(`${name}`)).toBeInTheDocument();
   });
 
   it('should renders info', () => {
-    expect(screen.getByText(`${testData.info}`)).toBeInTheDocument();
+    expect(screen.getByText(`${info}`)).toBeInTheDocument();
   });
 
   it('should renders description', () => {
-    expect(screen.getByText(`${testData.description}`)).toBeInTheDocument();
+    expect(screen.getByText(`${description}`)).toBeInTheDocument();
   });
 
   it('should renders actors', () => {
-    expect(screen.getByText(`${testData.actors}`)).toBeInTheDocument();
+    expect(screen.getByText(`${actors}`)).toBeInTheDocument();
   });
 });

@@ -1,49 +1,109 @@
-import React, { ChangeEvent, ProfilerProps, RefObject } from 'react';
+import React, { ProfilerProps } from 'react';
 import { Component } from 'react';
+import { Card } from './components/Card';
+import { InputText } from './components/InputText';
+import { InputData } from './components/InputData';
+import { FormCard, IInitialState } from './interfaces';
+import { textInputValidate } from './utils';
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export class Form extends Component<{}, { name: string }> {
-  name: RefObject<HTMLInputElement>;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Props {}
 
-  constructor(props: ProfilerProps) {
+export class Form extends Component<Props, IInitialState> {
+  state: IInitialState = {
+    invalidName: '',
+    invalidData: '',
+    submitButtonActive: false,
+    isValid: false,
+    cardCollection: [],
+  };
+
+  inputRef: React.RefObject<HTMLInputElement>;
+  inputDataRef: React.RefObject<HTMLInputElement>;
+
+  constructor(props: Props) {
     super(props);
-    this.handlerSubmit = this.handlerSubmit.bind(this);
-    this.name = React.createRef();
+    this.inputRef = React.createRef();
+    this.inputDataRef = React.createRef();
   }
 
-  handlerSubmit(e: React.FormEvent<HTMLFormElement>) {
+  inputSubmitRef = React.createRef<HTMLInputElement>();
+
+  validate = () => {
+    let invalidName = '';
+    let invalidData = '';
+
+    const date = new Date(this.inputDataRef.current!.value);
+
+    if (this.inputRef.current!.value.length < 5) {
+      invalidName = 'length of name must be more than 5';
+    }
+
+    if (date.getFullYear() >= 2021 || date.getFullYear() <= 1960) {
+      invalidData = 'the date must be between 1960 - 2021';
+    }
+
+    if (invalidName || invalidData) {
+      this.setState({
+        invalidName,
+        invalidData,
+        submitButtonActive: false,
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(this.name.current?.value);
-    const submitBtn = document.getElementById('name') as HTMLInputElement;
+    const isValid = this.validate();
 
-    submitBtn.setAttribute('minlength', '5');
-  }
+    if (isValid) {
+      console.log(this.inputRef.current!.value);
+      this.setState({ invalidName: '', invalidData: '', isValid: true });
+      this.setState(({ cardCollection }) => {
+        const card: FormCard = {
+          name: this.inputRef.current!.value,
+          data: this.inputDataRef.current!.value,
+        };
+        const newArr = [...cardCollection, card];
 
-  onText = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value) {
-      const submitBtn = document.getElementById('form-submit') as HTMLInputElement;
-
-      submitBtn.removeAttribute('disabled');
+        return {
+          cardCollection: newArr,
+        };
+      });
     }
   };
 
-  disabledSubmit = () => {
-    const submitBtn = document.getElementById('form-submit') as HTMLInputElement;
-
-    submitBtn.setAttribute('disabled', 'disabled');
-  };
-
-  componentDidMount = () => {
-    this.disabledSubmit();
-  };
-
   render() {
+    const {
+      submitButtonActive,
+      invalidName,
+      isValid,
+      cardCollection,
+      invalidData,
+    } = this.state;
+
+    const cards = cardCollection.map(({ name, data }, index) => {
+      return <Card key={index} isValid={isValid} name={name} data={data} />;
+    });
+
     return (
-      <form onSubmit={this.handlerSubmit}>
-        <label htmlFor="name">
-          <input type="text" name="name" id="name" ref={this.name} onChange={this.onText} />
-        </label>
-        <input type="submit" value="Submit" id="form-submit" />
+      <form
+        onSubmit={this.handlerSubmit}
+        onChange={() => this.setState({ submitButtonActive: true })}
+      >
+        <InputText inputRef={this.inputRef} invalidName={invalidName} />
+        <InputData inputDataRef={this.inputDataRef} invalidData={invalidData} />
+        <input
+          type="submit"
+          value="Submit"
+          id="form-submit"
+          ref={this.inputSubmitRef}
+          disabled={!submitButtonActive}
+        />
+        <div>{cards}</div>
       </form>
     );
   }

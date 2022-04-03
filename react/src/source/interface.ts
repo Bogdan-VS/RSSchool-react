@@ -1,8 +1,8 @@
-export default interface IData {
-  item: IItem;
+export default interface IItem {
+  item: ICard;
 }
 
-export interface IItem {
+export interface ICard {
   name: string;
   info: string;
   description: string;

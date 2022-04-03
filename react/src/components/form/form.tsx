@@ -3,6 +3,7 @@ import { Component } from 'react';
 import { Card } from './components/Card';
 import { InputText } from './components/InputText';
 import { InputData } from './components/InputData';
+import { Select } from './components/Select/Select';
 import { FormCard, IInitialState } from './interfaces';
 import { textInputValidate } from './utils';
 
@@ -20,11 +21,13 @@ export class Form extends Component<Props, IInitialState> {
 
   inputRef: React.RefObject<HTMLInputElement>;
   inputDataRef: React.RefObject<HTMLInputElement>;
+  selectRef: React.RefObject<HTMLSelectElement>;
 
   constructor(props: Props) {
     super(props);
     this.inputRef = React.createRef();
     this.inputDataRef = React.createRef();
+    this.selectRef = React.createRef();
   }
 
   inputSubmitRef = React.createRef<HTMLInputElement>();
@@ -39,7 +42,11 @@ export class Form extends Component<Props, IInitialState> {
       invalidName = 'length of name must be more than 5';
     }
 
-    if (date.getFullYear() >= 2021 || date.getFullYear() <= 1960) {
+    if (
+      date.getFullYear() >= 2021 ||
+      date.getFullYear() <= 1960 ||
+      String(date) === 'Invalid Date'
+    ) {
       invalidData = 'the date must be between 1960 - 2021';
     }
 
@@ -96,6 +103,7 @@ export class Form extends Component<Props, IInitialState> {
       >
         <InputText inputRef={this.inputRef} invalidName={invalidName} />
         <InputData inputDataRef={this.inputDataRef} invalidData={invalidData} />
+        <Select selectRef={this.selectRef} />
         <input
           type="submit"
           value="Submit"

@@ -8,7 +8,7 @@ interface Props {
 export const InputData: React.FC<Props> = ({ inputDataRef, invalidData }) => {
   return (
     <label htmlFor="date">
-      <input type="date" name="date" id="name" ref={inputDataRef} />
+      <input type="date" name="date" id="date" ref={inputDataRef} />
       <div style={{ color: 'red' }}>{invalidData}</div>
     </label>
   );

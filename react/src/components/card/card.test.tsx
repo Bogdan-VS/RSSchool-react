@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Card } from './Card';
 
-import IItem, { ICard } from '../../source/interface';
+import { ICard } from '../../source/interface';
 
 const testData: ICard = {
   name: 'name',

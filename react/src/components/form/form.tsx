@@ -1,5 +1,5 @@
-import React from 'react';
-import { Component } from 'react';
+import React, { Component } from 'react';
+
 import { Card } from './components/Card';
 import { InputText } from './components/InputText';
 import { InputDate } from './components/InputDate';
@@ -7,6 +7,7 @@ import { Select } from './components/Select/Select';
 import { InputCheckbox } from './components/InputCheckbox';
 import { InputRadio } from './components/InputRadio';
 import { InputFile } from './components/InputFile';
+
 import { FormCard, IInitialState } from './interfaces';
 import { clearForm, validate } from './utils';
 import styles from './Form.module.scss';
@@ -90,31 +91,33 @@ export class Form extends Component<Props, IInitialState> {
         invalidRadio: '',
         isValid: true,
       });
-      this.setState(({ cardCollection }) => {
-        const card: FormCard = {
-          name: this.inputRef.current!.value,
-          data: this.inputDataRef.current!.value,
-          select: this.selectRef.current!.value,
-          checkbox: this.inputCheckboxRef.current!.checked ? 'Ready' : '',
-          radio: this.state.inputRadioValue,
-          file: url,
-        };
-        const newArr = [...cardCollection, card];
+      this.setState(
+        ({ cardCollection }) => {
+          const card: FormCard = {
+            name: this.inputRef.current!.value,
+            data: this.inputDataRef.current!.value,
+            select: this.selectRef.current!.value,
+            checkbox: this.inputCheckboxRef.current!.checked ? 'Ready' : '',
+            radio: this.state.inputRadioValue,
+            file: url,
+          };
+          const newArr = [...cardCollection, card];
 
-        return {
-          cardCollection: newArr,
-        };
-      });
-
-      // clearForm(
-      //   this.inputRef,
-      //   this.inputDataRef,
-      //   this.selectRef,
-      //   this.inputCheckboxRef,
-      //   this.inputRadioMaleRef,
-      //   this.inputRadioFemaleRef,
-      //   this.inputFileRef
-      // );
+          return {
+            cardCollection: newArr,
+          };
+        },
+        () =>
+          clearForm(
+            this.inputRef,
+            this.inputDataRef,
+            this.selectRef,
+            this.inputCheckboxRef,
+            this.inputRadioMaleRef,
+            this.inputRadioFemaleRef,
+            this.inputFileRef
+          )
+      );
     }
   };
 

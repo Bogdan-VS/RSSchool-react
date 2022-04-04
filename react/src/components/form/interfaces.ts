@@ -15,6 +15,8 @@ export interface IInputText {
 export interface FormCard {
   name: string;
   data: string;
+  select: string;
+  checkbox: string;
 }
 
 export interface IInitialState {

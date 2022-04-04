@@ -1,11 +1,11 @@
-import React, { ProfilerProps } from 'react';
+import React from 'react';
 import { Component } from 'react';
 import { Card } from './components/Card';
 import { InputText } from './components/InputText';
 import { InputData } from './components/InputData';
 import { Select } from './components/Select/Select';
+import { InputCheckbox } from './components/InputCheckbox';
 import { FormCard, IInitialState } from './interfaces';
-import { textInputValidate } from './utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props {}
@@ -22,12 +22,14 @@ export class Form extends Component<Props, IInitialState> {
   inputRef: React.RefObject<HTMLInputElement>;
   inputDataRef: React.RefObject<HTMLInputElement>;
   selectRef: React.RefObject<HTMLSelectElement>;
+  inputCheckboxRef: React.RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
     this.inputRef = React.createRef();
     this.inputDataRef = React.createRef();
     this.selectRef = React.createRef();
+    this.inputCheckboxRef = React.createRef();
   }
 
   inputSubmitRef = React.createRef<HTMLInputElement>();
@@ -67,12 +69,13 @@ export class Form extends Component<Props, IInitialState> {
     const isValid = this.validate();
 
     if (isValid) {
-      console.log(this.inputRef.current!.value);
       this.setState({ invalidName: '', invalidData: '', isValid: true });
       this.setState(({ cardCollection }) => {
         const card: FormCard = {
           name: this.inputRef.current!.value,
           data: this.inputDataRef.current!.value,
+          select: this.selectRef.current!.value,
+          checkbox: this.inputCheckboxRef.current!.checked ? 'Ready' : '',
         };
         const newArr = [...cardCollection, card];
 
@@ -92,9 +95,20 @@ export class Form extends Component<Props, IInitialState> {
       invalidData,
     } = this.state;
 
-    const cards = cardCollection.map(({ name, data }, index) => {
-      return <Card key={index} isValid={isValid} name={name} data={data} />;
-    });
+    const cards = cardCollection.map(
+      ({ name, data, select, checkbox }, index) => {
+        return (
+          <Card
+            key={index}
+            isValid={isValid}
+            name={name}
+            data={data}
+            select={select}
+            checkbox={checkbox}
+          />
+        );
+      }
+    );
 
     return (
       <form
@@ -104,6 +118,7 @@ export class Form extends Component<Props, IInitialState> {
         <InputText inputRef={this.inputRef} invalidName={invalidName} />
         <InputData inputDataRef={this.inputDataRef} invalidData={invalidData} />
         <Select selectRef={this.selectRef} />
+        <InputCheckbox inputCheckboxRef={this.inputCheckboxRef} />
         <input
           type="submit"
           value="Submit"

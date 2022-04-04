@@ -17,12 +17,15 @@ export interface FormCard {
   data: string;
   select: string;
   checkbox: string;
+  radio: string;
 }
 
 export interface IInitialState {
   invalidName: string;
   invalidData: string;
+  invalidRadio: string;
   submitButtonActive: boolean;
   isValid: boolean;
+  inputRadioValue: string;
   cardCollection: FormCard[];
 }

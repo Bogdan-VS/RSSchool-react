@@ -5,10 +5,11 @@ export class Card extends Component<{
   data: string;
   select: string;
   checkbox: string;
+  radio: string;
   isValid: boolean;
 }> {
   render() {
-    const { name, data, isValid, select, checkbox } = this.props;
+    const { name, data, isValid, select, checkbox, radio } = this.props;
 
     return (
       <div>
@@ -16,6 +17,7 @@ export class Card extends Component<{
         <div>{isValid ? data : null}</div>
         <div>{isValid ? select : null}</div>
         <div>{isValid ? checkbox : null}</div>
+        <div>{isValid ? radio : null}</div>
       </div>
     );
   }

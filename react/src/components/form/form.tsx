@@ -5,7 +5,9 @@ import { InputText } from './components/InputText';
 import { InputData } from './components/InputData';
 import { Select } from './components/Select/Select';
 import { InputCheckbox } from './components/InputCheckbox';
+import { InputRadio } from './components/InputRadio';
 import { FormCard, IInitialState } from './interfaces';
+import { validate } from './utils';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props {}
@@ -14,8 +16,10 @@ export class Form extends Component<Props, IInitialState> {
   state: IInitialState = {
     invalidName: '',
     invalidData: '',
+    invalidRadio: '',
     submitButtonActive: false,
     isValid: false,
+    inputRadioValue: '',
     cardCollection: [],
   };
 
@@ -23,6 +27,8 @@ export class Form extends Component<Props, IInitialState> {
   inputDataRef: React.RefObject<HTMLInputElement>;
   selectRef: React.RefObject<HTMLSelectElement>;
   inputCheckboxRef: React.RefObject<HTMLInputElement>;
+  inputRadioMaleRef: React.RefObject<HTMLInputElement>;
+  inputRadioFemaleRef: React.RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
@@ -30,32 +36,24 @@ export class Form extends Component<Props, IInitialState> {
     this.inputDataRef = React.createRef();
     this.selectRef = React.createRef();
     this.inputCheckboxRef = React.createRef();
+    this.inputRadioMaleRef = React.createRef();
+    this.inputRadioFemaleRef = React.createRef();
   }
 
   inputSubmitRef = React.createRef<HTMLInputElement>();
 
-  validate = () => {
-    let invalidName = '';
-    let invalidData = '';
+  checkValidate = () => {
+    const [invalidName, invalidData, invalidRadio] = validate(
+      this.inputDataRef,
+      this.inputRef,
+      this.state.inputRadioValue
+    );
 
-    const date = new Date(this.inputDataRef.current!.value);
-
-    if (this.inputRef.current!.value.length < 5) {
-      invalidName = 'length of name must be more than 5';
-    }
-
-    if (
-      date.getFullYear() >= 2021 ||
-      date.getFullYear() <= 1960 ||
-      String(date) === 'Invalid Date'
-    ) {
-      invalidData = 'the date must be between 1960 - 2021';
-    }
-
-    if (invalidName || invalidData) {
+    if (invalidName || invalidData || invalidRadio) {
       this.setState({
         invalidName,
         invalidData,
+        invalidRadio,
         submitButtonActive: false,
       });
       return false;
@@ -64,18 +62,28 @@ export class Form extends Component<Props, IInitialState> {
     return true;
   };
 
+  getValueInputRadio = (value: string) => {
+    this.setState({ inputRadioValue: value });
+  };
+
   handlerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const isValid = this.validate();
+    const isValid = this.checkValidate();
 
     if (isValid) {
-      this.setState({ invalidName: '', invalidData: '', isValid: true });
+      this.setState({
+        invalidName: '',
+        invalidData: '',
+        invalidRadio: '',
+        isValid: true,
+      });
       this.setState(({ cardCollection }) => {
         const card: FormCard = {
           name: this.inputRef.current!.value,
           data: this.inputDataRef.current!.value,
           select: this.selectRef.current!.value,
           checkbox: this.inputCheckboxRef.current!.checked ? 'Ready' : '',
+          radio: this.state.inputRadioValue,
         };
         const newArr = [...cardCollection, card];
 
@@ -93,10 +101,11 @@ export class Form extends Component<Props, IInitialState> {
       isValid,
       cardCollection,
       invalidData,
+      invalidRadio,
     } = this.state;
 
     const cards = cardCollection.map(
-      ({ name, data, select, checkbox }, index) => {
+      ({ name, data, select, checkbox, radio }, index) => {
         return (
           <Card
             key={index}
@@ -105,6 +114,7 @@ export class Form extends Component<Props, IInitialState> {
             data={data}
             select={select}
             checkbox={checkbox}
+            radio={radio}
           />
         );
       }
@@ -119,6 +129,12 @@ export class Form extends Component<Props, IInitialState> {
         <InputData inputDataRef={this.inputDataRef} invalidData={invalidData} />
         <Select selectRef={this.selectRef} />
         <InputCheckbox inputCheckboxRef={this.inputCheckboxRef} />
+        <InputRadio
+          inputRadioMaleRef={this.inputRadioMaleRef}
+          inputRadioFemaleRef={this.inputRadioFemaleRef}
+          currentValue={this.getValueInputRadio}
+          invalidRadio={invalidRadio}
+        />
         <input
           type="submit"
           value="Submit"

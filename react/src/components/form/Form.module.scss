@@ -1,0 +1,21 @@
+.wrapper {
+  margin: 20px 0;
+}
+.formContainer {
+  display: flex;
+  margin: 0 auto;
+  width: 300px;
+  padding: 20px;
+  background-color: #f0f8ff;
+  flex-direction: column;
+  row-gap: 10px;
+  border-radius: 4px;
+}
+.cardContainer {
+  display: flex;
+  margin-top: 40px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 20px;
+}

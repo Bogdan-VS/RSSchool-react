@@ -18,6 +18,7 @@ export interface FormCard {
   select: string;
   checkbox: string;
   radio: string;
+  file: string;
 }
 
 export interface IInitialState {

@@ -2,12 +2,16 @@ import React from 'react';
 import { Component } from 'react';
 import { Card } from './components/Card';
 import { InputText } from './components/InputText';
-import { InputData } from './components/InputData';
+import { InputDate } from './components/InputDate';
 import { Select } from './components/Select/Select';
 import { InputCheckbox } from './components/InputCheckbox';
 import { InputRadio } from './components/InputRadio';
+import { InputFile } from './components/InputFile';
 import { FormCard, IInitialState } from './interfaces';
-import { validate } from './utils';
+import { clearForm, validate } from './utils';
+import styles from './Form.module.scss';
+
+const { wrapper, formContainer, cardContainer } = styles;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props {}
@@ -29,6 +33,7 @@ export class Form extends Component<Props, IInitialState> {
   inputCheckboxRef: React.RefObject<HTMLInputElement>;
   inputRadioMaleRef: React.RefObject<HTMLInputElement>;
   inputRadioFemaleRef: React.RefObject<HTMLInputElement>;
+  inputFileRef: React.RefObject<HTMLInputElement>;
 
   constructor(props: Props) {
     super(props);
@@ -38,6 +43,7 @@ export class Form extends Component<Props, IInitialState> {
     this.inputCheckboxRef = React.createRef();
     this.inputRadioMaleRef = React.createRef();
     this.inputRadioFemaleRef = React.createRef();
+    this.inputFileRef = React.createRef();
   }
 
   inputSubmitRef = React.createRef<HTMLInputElement>();
@@ -70,6 +76,13 @@ export class Form extends Component<Props, IInitialState> {
     e.preventDefault();
     const isValid = this.checkValidate();
 
+    const file = this.inputFileRef.current!.files as FileList;
+    let url =
+      'https://cdn.dribbble.com/users/20883/screenshots/2381093/evgeniy-artsebasov-developer-icon.png';
+    if (file.length !== 0) {
+      url = URL.createObjectURL(file[0]);
+    }
+
     if (isValid) {
       this.setState({
         invalidName: '',
@@ -84,6 +97,7 @@ export class Form extends Component<Props, IInitialState> {
           select: this.selectRef.current!.value,
           checkbox: this.inputCheckboxRef.current!.checked ? 'Ready' : '',
           radio: this.state.inputRadioValue,
+          file: url,
         };
         const newArr = [...cardCollection, card];
 
@@ -91,6 +105,16 @@ export class Form extends Component<Props, IInitialState> {
           cardCollection: newArr,
         };
       });
+
+      // clearForm(
+      //   this.inputRef,
+      //   this.inputDataRef,
+      //   this.selectRef,
+      //   this.inputCheckboxRef,
+      //   this.inputRadioMaleRef,
+      //   this.inputRadioFemaleRef,
+      //   this.inputFileRef
+      // );
     }
   };
 
@@ -105,7 +129,7 @@ export class Form extends Component<Props, IInitialState> {
     } = this.state;
 
     const cards = cardCollection.map(
-      ({ name, data, select, checkbox, radio }, index) => {
+      ({ name, data, select, checkbox, radio, file }, index) => {
         return (
           <Card
             key={index}
@@ -115,35 +139,43 @@ export class Form extends Component<Props, IInitialState> {
             select={select}
             checkbox={checkbox}
             radio={radio}
+            file={file}
           />
         );
       }
     );
 
     return (
-      <form
-        onSubmit={this.handlerSubmit}
-        onChange={() => this.setState({ submitButtonActive: true })}
-      >
-        <InputText inputRef={this.inputRef} invalidName={invalidName} />
-        <InputData inputDataRef={this.inputDataRef} invalidData={invalidData} />
-        <Select selectRef={this.selectRef} />
-        <InputCheckbox inputCheckboxRef={this.inputCheckboxRef} />
-        <InputRadio
-          inputRadioMaleRef={this.inputRadioMaleRef}
-          inputRadioFemaleRef={this.inputRadioFemaleRef}
-          currentValue={this.getValueInputRadio}
-          invalidRadio={invalidRadio}
-        />
-        <input
-          type="submit"
-          value="Submit"
-          id="form-submit"
-          ref={this.inputSubmitRef}
-          disabled={!submitButtonActive}
-        />
-        <div>{cards}</div>
-      </form>
+      <div className={wrapper}>
+        <form
+          className={formContainer}
+          onSubmit={this.handlerSubmit}
+          onChange={() => this.setState({ submitButtonActive: true })}
+        >
+          <InputText inputRef={this.inputRef} invalidName={invalidName} />
+          <InputDate
+            inputDataRef={this.inputDataRef}
+            invalidData={invalidData}
+          />
+          <Select selectRef={this.selectRef} />
+          <InputCheckbox inputCheckboxRef={this.inputCheckboxRef} />
+          <InputRadio
+            inputRadioMaleRef={this.inputRadioMaleRef}
+            inputRadioFemaleRef={this.inputRadioFemaleRef}
+            currentValue={this.getValueInputRadio}
+            invalidRadio={invalidRadio}
+          />
+          <InputFile inputFileRef={this.inputFileRef} />
+          <input
+            type="submit"
+            value="Submit"
+            id="form-submit"
+            ref={this.inputSubmitRef}
+            disabled={!submitButtonActive}
+          />
+        </form>
+        <div className={cardContainer}>{cards}</div>
+      </div>
     );
   }
 }

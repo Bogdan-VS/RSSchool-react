@@ -1,0 +1,28 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 20px;
+}
+
+.card {
+  display: flex;
+  padding: 10px;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  background-color: #a0b5b5;
+  border-radius: 6px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  contain: content;
+}
+
+.cardItem {
+  margin: 5px 0;
+}

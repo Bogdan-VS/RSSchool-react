@@ -27,3 +27,21 @@ export const validate = (
 
   return [invalidName, invalidData, invalidRadio];
 };
+
+export const clearForm = (
+  inputRef: React.RefObject<HTMLInputElement>,
+  inputDataRef: React.RefObject<HTMLInputElement>,
+  selectRef: React.RefObject<HTMLSelectElement>,
+  inputCheckboxRef: React.RefObject<HTMLInputElement>,
+  inputRadioMaleRef: React.RefObject<HTMLInputElement>,
+  inputRadioFemaleRef: React.RefObject<HTMLInputElement>,
+  inputFileRef: React.RefObject<HTMLInputElement>
+) => {
+  inputRef.current!.value = '';
+  inputDataRef.current!.value = '';
+  selectRef.current!.value = '';
+  inputCheckboxRef.current!.value = '';
+  inputRadioMaleRef.current!.value = '';
+  inputRadioFemaleRef.current!.value = '';
+  inputFileRef.current!.files = null;
+};

@@ -12,16 +12,18 @@ export class SingleCard extends Component<SingleCardProps> {
       .card as CharacterResults;
 
     return (
-      <div className={overlay}>
+      <div className={overlay} data-testid="overlay">
         <div className={cardContainer}>
-          <div className={close} onClick={this.props.close}></div>
+          <button className={close} onClick={this.props.close}></button>
           <h3>Details</h3>
           <img src={image} alt="Avatar" />
-          <div className={item}>{`Name: ${name}`}</div>
-          <div className={item}>{`Status: ${status}`}</div>
-          <div className={item}>{`Species: ${species}`}</div>
-          <div className={item}>{`Gender: ${gender}`}</div>
-          <div className={item}>{`Origin: ${origin?.name}`}</div>
+          <ul>
+            <li className={item}>{`Name: ${name}`}</li>
+            <li className={item}>{`Status: ${status}`}</li>
+            <li className={item}>{`Species: ${species}`}</li>
+            <li className={item}>{`Gender: ${gender}`}</li>
+            <li className={item}>{`Origin: ${origin?.name}`}</li>
+          </ul>
         </div>
       </div>
     );

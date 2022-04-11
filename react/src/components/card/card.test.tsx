@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { Card } from './Card';
 
-import { ICard } from '../../source/interface';
 import { CharacterResults } from '../../services/type';
 
 const testData: CharacterResults = {

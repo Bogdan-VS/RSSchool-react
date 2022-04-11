@@ -29,6 +29,10 @@
   top: 50%;
 }
 
+.item {
+  list-style: none;
+}
+
 .close {
   position: absolute;
   top: 20px;
@@ -36,12 +40,14 @@
   cursor: pointer;
   user-select: none;
   transition: all 0.3s;
+  border: none;
+  background: transparent;
 }
 
 .close::before {
   content: '';
   position: absolute;
-  top: -1px;
+  top: 0px;
   width: 20px;
   height: 2px;
   background-color: black;
@@ -51,7 +57,7 @@
 .close::after {
   content: '';
   position: absolute;
-  bottom: -1px;
+  bottom: 0px;
   width: 20px;
   height: 2px;
   background-color: black;

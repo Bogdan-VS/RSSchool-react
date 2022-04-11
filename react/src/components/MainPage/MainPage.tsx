@@ -36,7 +36,7 @@ export class MainPage extends Component<unknown, TypeMainPage> {
 
   render() {
     const { singleCard, label, loading } = this.state;
-    console.log(loading);
+
     const spinner = !loading ? <Spinner /> : null;
     const content = loading ? (
       <SingleCard card={singleCard} close={this.closeSingleCard} />

@@ -1,4 +1,4 @@
-import { CharacterResults } from '../../services/type';
+import { CharacterResults } from '../../../services/type';
 
 export type CardProps = {
   card: CardItem;

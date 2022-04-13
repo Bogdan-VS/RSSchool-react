@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { Card } from './Card';
 
-import { CharacterResults } from '../../services/type';
+import { CharacterResults } from '../../../services/type';
 
 const testData: CharacterResults = {
   name: 'name',

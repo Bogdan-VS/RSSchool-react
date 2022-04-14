@@ -1,4 +1,10 @@
-import React, { ChangeEvent, Component, FormEvent } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import styles from './Search.module.scss';
 
@@ -8,67 +14,53 @@ type SearchProps = {
   search: (label: string) => void;
 };
 
-export class Search extends Component<SearchProps, unknown> {
-  state = {
-    label: '',
+export const Search = ({ search }: SearchProps) => {
+  const [label, setLabel] = useState('');
+
+  const refSearch = useRef<HTMLInputElement>(null);
+
+  const searchItem = (e: ChangeEvent<HTMLInputElement>) =>
+    setLabel(e.target.value);
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.code === 'Enter') {
+      search(label);
+    }
   };
 
-  refSearch: React.RefObject<HTMLInputElement>;
-
-  constructor(props: SearchProps) {
-    super(props);
-    this.refSearch = React.createRef();
-  }
-
-  search = (e: ChangeEvent) => {
-    this.setState({
-      label: (e.target as HTMLInputElement).value,
-    });
-  };
-
-  componentDidMount() {
+  useEffect(() => {
     const label = localStorage.getItem('label');
 
     if (label) {
-      const searchText = document.getElementById('search') as HTMLInputElement;
-      searchText.value = label;
+      refSearch.current!.value = label;
     }
-  }
+  });
 
-  onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.code === 'Enter') {
-      this.props.search(this.state.label);
-    }
-  };
+  useEffect(() => {
+    return () => {
+      localStorage.setItem('label', label);
+    };
+  }, [label]);
 
-  componentWillUnmount() {
-    const { label } = this.state;
-
-    localStorage.setItem('label', label);
-  }
-
-  render() {
-    const { search } = this.props;
-
-    return (
-      <form action="search" onSubmit={(e: FormEvent) => e.preventDefault()}>
-        <div className={wrapper}>
-          <input
-            className={item}
-            type="search"
-            name="search"
-            id="search"
-            onChange={this.search}
-          />
-          <button
-            className={btn}
-            onClick={() => search(this.state.label)}
-            onKeyDown={() => this.onKeyDown}
-          >
-            Search
-          </button>
-        </div>
-      </form>
-    );
-  }
-}
+  return (
+    <form action="search" onSubmit={(e: FormEvent) => e.preventDefault()}>
+      <div className={wrapper}>
+        <input
+          className={item}
+          type="search"
+          name="search"
+          id="search"
+          ref={refSearch}
+          onChange={searchItem}
+        />
+        <button
+          className={btn}
+          onClick={() => search(label)}
+          onKeyDown={() => onKeyDown}
+        >
+          Search
+        </button>
+      </div>
+    </form>
+  );
+};

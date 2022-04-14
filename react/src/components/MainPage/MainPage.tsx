@@ -1,54 +1,36 @@
-import { Component } from 'react';
+import { useState } from 'react';
+
 import { CharacterResults } from '../../services/type';
 import { Cards } from '../Cards';
 import { Search } from '../Search';
 import { SingleCard } from '../SingleCard/SingleCard';
 import { Spinner } from '../Spinner';
-import { TypeMainPage } from './type';
 
-export class MainPage extends Component<unknown, TypeMainPage> {
-  state: TypeMainPage = {
-    singleCard: null,
-    loading: true,
-    label: '',
-  };
+export const MainPage = () => {
+  const [singleCard, setSingleCard] = useState<CharacterResults | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [label, setLabel] = useState<string>('');
 
-  toggleSingleCard = (card: CharacterResults) => {
-    this.setState({ loading: false });
+  const toggleSingleCard = (card: CharacterResults) => {
+    setLoading(false);
 
     setTimeout(() => {
-      this.setState({
-        singleCard: card,
-        loading: true,
-      });
+      setSingleCard(card);
+      setLoading(true);
     }, 1000);
   };
 
-  closeSingleCard = () => {
-    this.setState({
-      singleCard: null,
-    });
-  };
+  const closeSingleCard = () => setSingleCard(null);
+  const search = (label: string) => setLabel(label);
 
-  search = (label: string) => {
-    this.setState({ label });
-  };
-
-  render() {
-    const { singleCard, label, loading } = this.state;
-
-    const spinner = !loading ? <Spinner /> : null;
-    const content = loading ? (
-      <SingleCard card={singleCard} close={this.closeSingleCard} />
-    ) : null;
-
-    return (
-      <main>
-        <Search search={this.search} />
-        <Cards onToggle={this.toggleSingleCard} label={label} />
-        {singleCard && content}
-        {spinner}
-      </main>
-    );
-  }
-}
+  return (
+    <main>
+      <Search search={search} />
+      <Cards onToggle={toggleSingleCard} label={label} />
+      {singleCard && loading && (
+        <SingleCard card={singleCard} close={closeSingleCard} />
+      )}
+      {!loading && <Spinner />}
+    </main>
+  );
+};

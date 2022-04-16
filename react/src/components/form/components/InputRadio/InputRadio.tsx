@@ -1,38 +1,36 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
+import { Message } from 'react-hook-form';
 
 import styles from './InputRadio.module.scss';
 
 const { mainTitle, title, inputWrapper } = styles;
 
-interface Props {
-  inputRadioMaleRef: React.RefObject<HTMLInputElement>;
-  inputRadioFemaleRef: React.RefObject<HTMLInputElement>;
-  currentValue(value: string): void;
-  invalidRadio: string;
-}
-
-export const InputRadio: React.FC<Props> = ({
-  inputRadioFemaleRef,
-  inputRadioMaleRef,
-  currentValue,
-  invalidRadio,
-}) => {
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    currentValue(e.target.value);
+type inputRadioProps = {
+  register: {
+    name: string;
   };
+  errors: {
+    Gender?:
+      | {
+          message?: Message;
+        }
+      | undefined;
+    message?: Message;
+  };
+};
 
+export const InputRadio: React.FC<inputRadioProps> = ({ register, errors }) => {
   return (
-    <div onChange={onChange}>
+    <div>
       <div className={mainTitle}>Select your gender</div>
       <label className={title} htmlFor="male">
         Male
         <input
           className={inputWrapper}
           type="radio"
-          name="gender"
           id="male"
-          ref={inputRadioMaleRef}
           value="Male"
+          {...register}
         />
       </label>
       <label className={title} htmlFor="female">
@@ -40,13 +38,14 @@ export const InputRadio: React.FC<Props> = ({
         <input
           className={inputWrapper}
           type="radio"
-          name="gender"
           id="female"
-          ref={inputRadioFemaleRef}
           value="Female"
+          {...register}
         />
       </label>
-      <div style={{ color: 'red' }}>{invalidRadio}</div>
+      <div style={{ color: 'red' }}>
+        {errors.Gender && errors.Gender.message}
+      </div>
     </div>
   );
 };

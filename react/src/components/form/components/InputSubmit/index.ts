@@ -1,1 +1,0 @@
-export { InputSubmit } from './InputSubmit';

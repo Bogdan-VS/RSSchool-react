@@ -10,7 +10,7 @@ type inputRadioProps = {
     name: string;
   };
   errors: {
-    Gender?:
+    gender?:
       | {
           message?: Message;
         }
@@ -44,7 +44,7 @@ export const InputRadio: React.FC<inputRadioProps> = ({ register, errors }) => {
         />
       </label>
       <div style={{ color: 'red' }}>
-        {errors.Gender && errors.Gender.message}
+        {errors.gender && errors.gender.message}
       </div>
     </div>
   );

@@ -10,12 +10,11 @@ type UseFormProps = {
     name: string;
   };
   errors: {
-    Firstname?:
+    firstname?:
       | {
           message?: Message;
         }
       | undefined;
-    message?: Message;
   };
 };
 
@@ -24,10 +23,8 @@ export const InputText: React.FC<UseFormProps> = ({ register, errors }) => {
     <label className={title} htmlFor="name">
       Enter your name
       <input className={inputWrapper} type="text" id="name" {...register} />
-      {errors.Firstname && (
-        <div style={{ color: 'red' }}>
-          {errors.Firstname.message || 'invalid value'}
-        </div>
+      {errors.firstname && (
+        <div style={{ color: 'red' }}>{errors.firstname.message}</div>
       )}
     </label>
   );

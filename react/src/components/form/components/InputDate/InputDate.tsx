@@ -10,7 +10,7 @@ type UseFormProps = {
     name: string;
   };
   errors: {
-    Date?:
+    date?:
       | {
           message?: Message;
         }
@@ -24,7 +24,7 @@ export const InputDate: React.FC<UseFormProps> = ({ register, errors }) => {
     <label className={title} htmlFor="date">
       Enter your birthday
       <input className={inputWrapper} type="date" id="date" {...register} />
-      <div style={{ color: 'red' }}>{errors.Date?.message}</div>
+      <div style={{ color: 'red' }}>{errors.date?.message}</div>
     </label>
   );
 };

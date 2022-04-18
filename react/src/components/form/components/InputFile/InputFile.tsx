@@ -9,6 +9,9 @@ type inputFileProps = {
 };
 
 export const InputFile: React.FC<inputFileProps> = ({ register }) => {
+  const { name } = register;
+
+  console.log();
   return (
     <label className={title} htmlFor="profile_pic">
       Install your avatar

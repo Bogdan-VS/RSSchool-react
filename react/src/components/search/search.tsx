@@ -5,26 +5,26 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useGlobalProps } from '../AppContext/AppContext';
 
 import styles from './Search.module.scss';
 
 const { wrapper, item, btn } = styles;
 
-type SearchProps = {
-  search: (label: string) => void;
-};
-
-export const Search = ({ search }: SearchProps) => {
+export const Search = () => {
   const [label, setLabel] = useState('');
+
+  const { getLabel } = useGlobalProps();
 
   const refSearch = useRef<HTMLInputElement>(null);
 
-  const searchItem = (e: ChangeEvent<HTMLInputElement>) =>
+  const searchItem = (e: ChangeEvent<HTMLInputElement>) => {
     setLabel(e.target.value);
+  };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.code === 'Enter') {
-      search(label);
+      getLabel!(label);
     }
   };
 
@@ -55,7 +55,7 @@ export const Search = ({ search }: SearchProps) => {
         />
         <button
           className={btn}
-          onClick={() => search(label)}
+          onClick={() => getLabel!(label)}
           onKeyDown={() => onKeyDown}
         >
           Search

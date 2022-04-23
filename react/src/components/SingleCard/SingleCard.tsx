@@ -1,5 +1,6 @@
 import styles from './SingleCard.module.scss';
 import { CharacterResults } from '../../services/type';
+import { useGlobalProps } from '../AppContext/AppContext';
 
 const { item, overlay, cardContainer, closeBtn } = styles;
 
@@ -10,13 +11,21 @@ export type SingleCardProps = {
 
 type Close = () => void;
 
-export const SingleCard = ({ card, close }: SingleCardProps) => {
-  const { name, status, species, gender, origin, image } = card;
+export const SingleCard = () => {
+  const {
+    state: { singleCard },
+    closeSingleCard,
+  } = useGlobalProps();
+
+  const { name, status, species, gender, origin, image } = singleCard!;
 
   return (
     <div className={overlay} data-testid="overlay">
       <div className={cardContainer}>
-        <button className={closeBtn} onClick={close}></button>
+        <button
+          className={closeBtn}
+          onClick={() => closeSingleCard!()}
+        ></button>
         <h3>Details</h3>
         <img src={image} alt="Avatar" />
         <ul>

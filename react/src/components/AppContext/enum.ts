@@ -3,5 +3,6 @@ export enum GlobalState {
   singleCard = 'singleCard',
   closedSingleCard = 'closedSingleCard',
   loading = 'loading',
-  label = 'label',
+  searchProps = 'searchProps',
+  personalDataCollection = 'personalDataCollection',
 }

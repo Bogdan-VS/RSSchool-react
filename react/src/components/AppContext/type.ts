@@ -4,25 +4,36 @@ import { CharacterResults } from '../../services/type';
 
 export type IAction =
   | { type: 'data'; cards: CharacterResults[] }
-  | { type: 'label'; value: string }
+  | { type: 'searchProps'; props: ISearchProps }
   | { type: 'loading' }
   | { type: 'singleCard'; card: CharacterResults }
-  | { type: 'closedSingleCard' };
+  | { type: 'closedSingleCard' }
+  | { type: 'personalDataCollection'; personalData: FormFiles[] };
 
 export type IState = {
-  label: string;
+  searchProps: ISearchProps;
   cardsCollection: CharacterResults[] | null;
   loading: boolean;
   singleCard: CharacterResults | null;
+  personalDataCollection: FormFiles[];
+};
+
+export type ISearchProps = {
+  value: string;
+  male: string;
+  female: string;
+  genderless: string;
+  unknown: string;
 };
 
 export type IAppContext = {
   state: IState;
   renderCards?: (cards: CharacterResults[]) => void;
-  getLabel?: (value: string) => void;
+  getSearchProps?: (props: ISearchProps) => void;
   changeLoading?: () => void;
   renderSingleCard?: (card: CharacterResults) => void;
   closeSingleCard?: () => void;
+  renderPersonalCard?: (personData: FormFiles[]) => void;
 };
 
 export type IChildrenProps = {
@@ -30,4 +41,14 @@ export type IChildrenProps = {
     Header?: ReactNode;
     Routes?: ({ children, location }: RoutesProps) => React.ReactElement | null;
   };
+};
+
+export type FormFiles = {
+  firstname: string;
+  date: string;
+  country: string;
+  newsLetter: string;
+  gender: string;
+  file?: FileList;
+  fileUrl?: string;
 };

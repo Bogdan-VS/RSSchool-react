@@ -5,30 +5,38 @@ import { Character, CharacterResults } from '../../services/type';
 import { Api } from '../../services/api';
 import { Spinner } from '../Spinner';
 import { useGlobalProps } from '../AppContext/AppContext';
+import { getCorrectDataCards } from './utils';
 
 const { wrapper } = styles;
 
 export const Cards = () => {
   const {
     renderCards,
-    state: { label, cardsCollection, loading },
-    changeLoading,
+    state: {
+      searchProps: { value, male, female, genderless, unknown },
+      cardsCollection,
+    },
   } = useGlobalProps();
 
   useEffect(() => {
-    changeLoading!();
-
     setTimeout(() => {
-      Api.searchByCharacter(label).then((body: Character) => {
-        renderCards!(body.results);
-        changeLoading!();
+      Api.searchByCharacter(value).then((body: Character) => {
+        const correctdata: CharacterResults[] = getCorrectDataCards(
+          body.results,
+          male,
+          female,
+          genderless,
+          unknown
+        );
+
+        renderCards!(correctdata.length === 0 ? body.results : correctdata);
       });
     }, 1000);
-  }, [label]);
+  }, [value, male, female, genderless, unknown]);
 
   return (
     <div className={wrapper}>
-      {cardsCollection && loading ? (
+      {cardsCollection ? (
         cardsCollection.map((item: CharacterResults) => {
           return <Card card={item} key={item.id} />;
         })

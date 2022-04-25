@@ -7,6 +7,7 @@ import { MainPage } from '../MainPage';
 import { Errors } from '../Error';
 import { Form } from '../Form';
 import { AppProvider } from '../AppContext';
+import { SingleCard } from '../SingleCard';
 
 const { wrapper } = styles;
 
@@ -20,6 +21,7 @@ export const App = () => {
           <Route path="/about-us" element={<AboutUs />} />
           <Route path="*" element={<Errors />} />
           <Route path="/form" element={<Form />} />
+          <Route path="/cards/:id" element={<SingleCard />} />
         </Routes>
       </AppProvider>
     </div>

@@ -5,4 +5,6 @@ export enum GlobalState {
   loading = 'loading',
   searchProps = 'searchProps',
   personalDataCollection = 'personalDataCollection',
+  info = 'info',
+  pageNumber = 'pageNumber',
 }

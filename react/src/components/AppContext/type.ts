@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { RoutesProps } from 'react-router-dom';
-import { CharacterResults } from '../../services/type';
+import { CharacterInfo, CharacterResults } from '../../services/type';
 
 export type IAction =
   | { type: 'data'; cards: CharacterResults[] }
@@ -8,14 +8,25 @@ export type IAction =
   | { type: 'loading' }
   | { type: 'singleCard'; card: CharacterResults }
   | { type: 'closedSingleCard' }
-  | { type: 'personalDataCollection'; personalData: FormFiles[] };
+  | { type: 'personalDataCollection'; personalData: FormFiles[] }
+  | { type: 'info'; infoData: CharacterInfo }
+  | { type: 'pageNumber'; number: number };
 
 export type IState = {
   searchProps: ISearchProps;
   cardsCollection: CharacterResults[] | null;
+  info: IInfo;
+  pageNumber: number;
   loading: boolean;
   singleCard: CharacterResults | null;
   personalDataCollection: FormFiles[];
+};
+
+export type IInfo = {
+  pages: number;
+  count: number;
+  prev: string | null;
+  next: string | null;
 };
 
 export type ISearchProps = {
@@ -34,6 +45,8 @@ export type IAppContext = {
   renderSingleCard?: (card: CharacterResults) => void;
   closeSingleCard?: () => void;
   renderPersonalCard?: (personData: FormFiles[]) => void;
+  getInfo?: (infoData: CharacterInfo) => void;
+  getPageNumber?: (number: number) => void;
 };
 
 export type IChildrenProps = {

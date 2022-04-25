@@ -17,7 +17,7 @@ type ISearchForm = {
 export const Search = () => {
   const [label, setLabel] = useState('');
 
-  const { getSearchProps } = useGlobalProps();
+  const { getSearchProps, getPageNumber } = useGlobalProps();
 
   const { register, handleSubmit, setValue } = useForm<ISearchForm>();
 
@@ -31,6 +31,7 @@ export const Search = () => {
         unknown: unknown ? 'unknown' : '',
       };
 
+      getPageNumber!(1);
       getSearchProps!(searchData);
     }
   );

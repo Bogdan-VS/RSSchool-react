@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { CharacterResults } from '../../../services/type';
 import { useGlobalProps } from '../../AppContext/AppContext';
 
@@ -17,6 +18,9 @@ export const Card: React.FC<{ card: CardItem }> = ({ card }) => {
 
   const { changeLoading, renderSingleCard } = useGlobalProps();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, prefer-const
+  let navigate = useNavigate();
+
   const openSinglecard = (card: CharacterResults) => {
     changeLoading!();
 
@@ -31,7 +35,7 @@ export const Card: React.FC<{ card: CardItem }> = ({ card }) => {
       className={wrapper}
       data-testid="card"
       onClick={() => {
-        openSinglecard(card);
+        navigate(`/cards/${card.id}`);
       }}
     >
       <div

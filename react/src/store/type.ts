@@ -1,9 +1,9 @@
 import { ReactNode } from 'react';
 import { RoutesProps } from 'react-router-dom';
-import { CharacterInfo, CharacterResults } from '../../services/type';
+import { CharacterResults, CharacterInfo, Character } from '../services/type';
 
 export type IAction =
-  | { type: 'data'; cards: CharacterResults[] }
+  | { type: 'data'; payload: { cards: CharacterResults[] } }
   | { type: 'searchProps'; props: ISearchProps }
   | { type: 'loading' }
   | { type: 'singleCard'; card: CharacterResults }
@@ -20,6 +20,7 @@ export type IState = {
   loading: boolean;
   singleCard: CharacterResults | null;
   personalDataCollection: FormFiles[];
+  data: Character | null;
 };
 
 export type IInfo = {

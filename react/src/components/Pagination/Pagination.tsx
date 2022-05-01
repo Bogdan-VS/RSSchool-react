@@ -1,6 +1,9 @@
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGlobalProps } from '../AppContext/AppContext';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { getPageNumber } from '../../store/cardsSlice';
+import { IState } from '../../store/type';
 
 type IPaginationForm = {
   page: string;
@@ -8,11 +11,11 @@ type IPaginationForm = {
 
 export const Pagination = () => {
   const {
-    state: { info, pageNumber },
-    getPageNumber,
-  } = useGlobalProps();
+    info: { pages, next, prev },
+    pageNumber,
+  } = useSelector((state: { cards: IState }) => state.cards);
 
-  const { pages, next, prev, count } = info!;
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -21,15 +24,15 @@ export const Pagination = () => {
   } = useForm<IPaginationForm>();
 
   const submit = handleSubmit((data: IPaginationForm) => {
-    getPageNumber!(Number(data.page));
+    dispatch(getPageNumber(Number(data.page)));
   });
 
   const openPrevPage = useCallback(() => {
-    getPageNumber!(pageNumber - 1);
+    dispatch(getPageNumber(pageNumber - 1));
   }, [pageNumber]);
 
   const openNextPage = useCallback(() => {
-    getPageNumber!(pageNumber + 1);
+    dispatch(getPageNumber(pageNumber + 1));
   }, [pageNumber]);
 
   return (

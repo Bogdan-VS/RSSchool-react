@@ -9,18 +9,20 @@ import { InputRadio } from './components/InputRadio';
 import { InputFile } from './components/InputFile';
 
 import styles from './Form.module.scss';
-import { useGlobalProps } from '../AppContext/AppContext';
-import { FormFiles } from '../AppContext/type';
+import { FormFiles, IState } from '../../store/type';
+import { useDispatch, useSelector } from 'react-redux';
+import { renderPersonalCard } from '../../store/cardsSlice';
 
 const { wrapper, formContainer, cardContainer } = styles;
 
 export const Form = () => {
   const cardId = { id: 100 };
 
-  const {
-    renderPersonalCard,
-    state: { personalDataCollection },
-  } = useGlobalProps();
+  const dispatch = useDispatch();
+
+  const personalDataCollection = useSelector(
+    (state: { cards: IState }) => state.cards.personalDataCollection
+  );
 
   const {
     register,
@@ -48,7 +50,7 @@ export const Form = () => {
         },
       ];
 
-      renderPersonalCard!(currentData);
+      dispatch(renderPersonalCard(currentData));
       reset();
     }
   );

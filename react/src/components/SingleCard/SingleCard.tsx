@@ -1,8 +1,9 @@
 import styles from './SingleCard.module.scss';
 import { CharacterResults } from '../../services/type';
-import { useGlobalProps } from '../AppContext/AppContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { IState } from '../../store/type';
 
 const { item, overlay, cardContainer, closeBtn } = styles;
 
@@ -14,9 +15,9 @@ export type SingleCardProps = {
 type Close = () => void;
 
 export const SingleCard = () => {
-  const {
-    state: { cardsCollection },
-  } = useGlobalProps();
+  const cardsCollection = useSelector(
+    (state: { cards: IState }) => state.cards.cardsCollection
+  );
 
   const [card, setCard] = useState<CharacterResults>();
 
@@ -36,8 +37,6 @@ export const SingleCard = () => {
       return navigate('/');
     }
   }, [id]);
-
-  console.log('single card');
 
   if (!card) {
     return null;

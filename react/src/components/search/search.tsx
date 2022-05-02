@@ -1,8 +1,8 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 
 import { getPageNumber, getSearchProps } from '../../store/cardsSlice';
+import { useAppDispatch } from '../../store';
 
 import styles from './Search.module.scss';
 
@@ -19,7 +19,7 @@ type ISearchForm = {
 export const Search = () => {
   const [label, setLabel] = useState('');
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { register, handleSubmit, setValue } = useForm<ISearchForm>();
 

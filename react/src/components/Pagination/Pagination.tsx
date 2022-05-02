@@ -1,7 +1,8 @@
 import { useCallback } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
+import { useAppDispatch } from '../../store';
 import { getPageNumber } from '../../store/cardsSlice';
 import { IState } from '../../store/type';
 
@@ -15,7 +16,7 @@ export const Pagination = () => {
     pageNumber,
   } = useSelector((state: { cards: IState }) => state.cards);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const {
     register,

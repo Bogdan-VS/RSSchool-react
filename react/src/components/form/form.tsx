@@ -6,19 +6,21 @@ import { InputDate } from './components/InputDate';
 import { Select } from './components/Select/Select';
 import { InputCheckbox } from './components/InputCheckbox';
 import { InputRadio } from './components/InputRadio';
+import { useSelector } from 'react-redux';
+
+import { useAppDispatch } from '../../store';
 import { InputFile } from './components/InputFile';
+import { FormFiles, IState } from '../../store/type';
+import { renderPersonalCard } from '../../store/cardsSlice';
 
 import styles from './Form.module.scss';
-import { FormFiles, IState } from '../../store/type';
-import { useDispatch, useSelector } from 'react-redux';
-import { renderPersonalCard } from '../../store/cardsSlice';
 
 const { wrapper, formContainer, cardContainer } = styles;
 
 export const Form = () => {
   const cardId = { id: 100 };
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const personalDataCollection = useSelector(
     (state: { cards: IState }) => state.cards.personalDataCollection

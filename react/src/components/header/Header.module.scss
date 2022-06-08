@@ -1,0 +1,24 @@
+header {
+  display: flex;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #faebd734;
+}
+
+.nav {
+  display: flex;
+  column-gap: 50px;
+  font-size: 20px;
+}
+
+.item {
+  text-decoration: none;
+  color: #d3d3d3;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.item:hover {
+  opacity: 0.7;
+}

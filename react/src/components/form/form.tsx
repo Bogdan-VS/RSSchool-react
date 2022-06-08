@@ -6,21 +6,25 @@ import { InputDate } from './components/InputDate';
 import { Select } from './components/Select/Select';
 import { InputCheckbox } from './components/InputCheckbox';
 import { InputRadio } from './components/InputRadio';
+import { useSelector } from 'react-redux';
+
+import { useAppDispatch } from '../../store';
 import { InputFile } from './components/InputFile';
+import { FormFiles, IState } from '../../store/type';
+import { renderPersonalCard } from '../../store/cardsSlice';
 
 import styles from './Form.module.scss';
-import { useGlobalProps } from '../AppContext/AppContext';
-import { FormFiles } from '../AppContext/type';
 
 const { wrapper, formContainer, cardContainer } = styles;
 
 export const Form = () => {
   const cardId = { id: 100 };
 
-  const {
-    renderPersonalCard,
-    state: { personalDataCollection },
-  } = useGlobalProps();
+  const dispatch = useAppDispatch();
+
+  const personalDataCollection = useSelector(
+    (state: { cards: IState }) => state.cards.personalDataCollection
+  );
 
   const {
     register,
@@ -48,7 +52,7 @@ export const Form = () => {
         },
       ];
 
-      renderPersonalCard!(currentData);
+      dispatch(renderPersonalCard(currentData));
       reset();
     }
   );

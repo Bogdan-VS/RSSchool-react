@@ -1,6 +1,8 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useGlobalProps } from '../AppContext/AppContext';
+
+import { getPageNumber, getSearchProps } from '../../store/cardsSlice';
+import { useAppDispatch } from '../../store';
 
 import styles from './Search.module.scss';
 
@@ -17,7 +19,7 @@ type ISearchForm = {
 export const Search = () => {
   const [label, setLabel] = useState('');
 
-  const { getSearchProps, getPageNumber } = useGlobalProps();
+  const dispatch = useAppDispatch();
 
   const { register, handleSubmit, setValue } = useForm<ISearchForm>();
 
@@ -31,16 +33,16 @@ export const Search = () => {
         unknown: unknown ? 'unknown' : '',
       };
 
-      getPageNumber!(1);
-      getSearchProps!(searchData);
+      dispatch(getPageNumber(1));
+      dispatch(getSearchProps(searchData));
     }
   );
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+  const onKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
     if (e.code === 'Enter') {
       submit();
     }
-  };
+  }, []);
 
   useEffect(() => {
     const labelStore = localStorage.getItem('label');

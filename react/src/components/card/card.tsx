@@ -1,16 +1,22 @@
 import { Component } from 'react';
-import IItem from '../../source/interface';
 
 import style from './Card.module.scss';
 
+import { CardProps } from './type';
+
 const { wrapper, img, textWrapper } = style;
 
-export class Card extends Component<IItem> {
+export class Card extends Component<CardProps, unknown> {
   render() {
-    const { name, info, description, actors, image } = this.props.item;
+    const { name, image, species } = this.props.card;
+    const { onToggle } = this.props;
 
     return (
-      <div className={wrapper} data-testid="card">
+      <div
+        className={wrapper}
+        data-testid="card"
+        onClick={() => onToggle(this.props.card)}
+      >
         <div
           className={img}
           style={{
@@ -19,9 +25,7 @@ export class Card extends Component<IItem> {
         ></div>
         <div className={textWrapper}>
           <h4>{name}</h4>
-          <p>{info}</p>
-          <p>{description}</p>
-          <p>{actors}</p>
+          <p>{species}</p>
         </div>
       </div>
     );

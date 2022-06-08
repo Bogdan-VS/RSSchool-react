@@ -14,10 +14,7 @@ import styles from './Form.module.scss';
 
 const { wrapper, formContainer, cardContainer } = styles;
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props {}
-
-export class Form extends Component<Props, IInitialState> {
+export class Form extends Component<unknown, IInitialState> {
   state: IInitialState = {
     invalidName: '',
     invalidData: '',
@@ -36,7 +33,7 @@ export class Form extends Component<Props, IInitialState> {
   inputRadioFemaleRef: React.RefObject<HTMLInputElement>;
   inputFileRef: React.RefObject<HTMLInputElement>;
 
-  constructor(props: Props) {
+  constructor(props: unknown) {
     super(props);
     this.inputRef = React.createRef();
     this.inputDataRef = React.createRef();

@@ -1,13 +1,24 @@
-import { ChangeEvent, Component } from 'react';
+import React, { ChangeEvent, Component, FormEvent } from 'react';
 
 import styles from './Search.module.scss';
 
 const { wrapper, item, btn } = styles;
 
-export class Search extends Component {
+type SearchProps = {
+  search: (label: string) => void;
+};
+
+export class Search extends Component<SearchProps, unknown> {
   state = {
     label: '',
   };
+
+  refSearch: React.RefObject<HTMLInputElement>;
+
+  constructor(props: SearchProps) {
+    super(props);
+    this.refSearch = React.createRef();
+  }
 
   search = (e: ChangeEvent) => {
     this.setState({
@@ -24,6 +35,12 @@ export class Search extends Component {
     }
   }
 
+  onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.code === 'Enter') {
+      this.props.search(this.state.label);
+    }
+  };
+
   componentWillUnmount() {
     const { label } = this.state;
 
@@ -31,8 +48,10 @@ export class Search extends Component {
   }
 
   render() {
+    const { search } = this.props;
+
     return (
-      <form action="search">
+      <form action="search" onSubmit={(e: FormEvent) => e.preventDefault()}>
         <div className={wrapper}>
           <input
             className={item}
@@ -41,7 +60,13 @@ export class Search extends Component {
             id="search"
             onChange={this.search}
           />
-          <button className={btn}>Search</button>
+          <button
+            className={btn}
+            onClick={() => search(this.state.label)}
+            onKeyDown={() => this.onKeyDown}
+          >
+            Search
+          </button>
         </div>
       </form>
     );

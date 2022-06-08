@@ -1,37 +1,31 @@
 import { render, screen } from '@testing-library/react';
 import { Card } from './Card';
 
-import { ICard } from '../../source/interface';
+import { CharacterResults } from '../../services/type';
 
-const testData: ICard = {
+const testData: CharacterResults = {
   name: 'name',
-  info: 'info',
-  description: 'description',
-  actors: 'actors',
   image: 'image',
+  species: 'species',
   id: 100,
 };
 
-const { name, info, description, actors } = testData;
+const onToggle = (card: CharacterResults) => {
+  console.log(card);
+};
+
+const { name, species } = testData;
 
 describe('Card', () => {
   beforeEach(() => {
-    render(<Card item={testData} />);
+    render(<Card card={testData} onToggle={onToggle} />);
   });
 
   it('should renders name', () => {
     expect(screen.getByText(`${name}`)).toBeInTheDocument();
   });
 
-  it('should renders info', () => {
-    expect(screen.getByText(`${info}`)).toBeInTheDocument();
-  });
-
-  it('should renders description', () => {
-    expect(screen.getByText(`${description}`)).toBeInTheDocument();
-  });
-
-  it('should renders actors', () => {
-    expect(screen.getByText(`${actors}`)).toBeInTheDocument();
+  it('should renders species', () => {
+    expect(screen.getByText(`${species}`)).toBeInTheDocument();
   });
 });

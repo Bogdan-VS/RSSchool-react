@@ -33,7 +33,7 @@
   list-style: none;
 }
 
-.close {
+.closeBtn {
   position: absolute;
   top: 20px;
   right: 30px;
@@ -44,7 +44,7 @@
   background: transparent;
 }
 
-.close::before {
+.closeBtn::before {
   content: '';
   position: absolute;
   top: 0px;
@@ -54,7 +54,7 @@
   transform: rotate(-45deg);
 }
 
-.close::after {
+.closeBtn::after {
   content: '';
   position: absolute;
   bottom: 0px;
@@ -64,8 +64,8 @@
   transform: rotate(45deg);
 }
 
-.close:hover::before,
-.close:hover::after {
+.closeBtn:hover::before,
+.closeBtn:hover::after {
   background-color: brown;
 }
 

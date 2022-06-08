@@ -1,34 +1,32 @@
-import { Component } from 'react';
-
 import styles from './Card.module.scss';
 
 const { card, avatar, cardItem } = styles;
 
-export class Card extends Component<{
-  name: string;
-  data: string;
-  select: string;
-  checkbox: string;
-  radio: string;
-  file: string;
-  isValid: boolean;
-}> {
-  render() {
-    const { name, data, isValid, select, checkbox, radio, file } = this.props;
+type CardProps = {
+  firstname: string;
+  date: string;
+  country: string;
+  newsLetter: string;
+  gender: string;
+  fileUrl?: string;
+};
 
-    return (
-      <div className={card}>
-        <img className={avatar} src={file} alt="Avatar" />
-        <div className={cardItem}>{isValid ? `Your name: ${name}` : null}</div>
-        <div className={cardItem}>
-          {isValid ? `Your birthday: ${data}` : null}
-        </div>
-        <div className={cardItem}>
-          {isValid ? `Country of residence: ${select}` : null}
-        </div>
-        <div className={cardItem}>{isValid ? checkbox : null}</div>
-        <div className={cardItem}>{isValid ? `Gender: ${radio}` : null}</div>
-      </div>
-    );
-  }
-}
+export const Card: React.FC<CardProps> = ({
+  firstname,
+  date,
+  country,
+  newsLetter,
+  gender,
+  fileUrl,
+}) => {
+  return (
+    <div className={card}>
+      <img className={avatar} src={fileUrl} alt="Avatar" />
+      <div className={cardItem}>{`Your name: ${firstname}`}</div>
+      <div className={cardItem}>{`Your birthday: ${date}`}</div>
+      <div className={cardItem}>{`Country of residence: ${country}`}</div>
+      <div className={cardItem}>{newsLetter}</div>
+      <div className={cardItem}>{`Gender: ${gender}`}</div>
+    </div>
+  );
+};

@@ -1,14 +1,26 @@
-import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import { InputText } from './InputText';
 
+const inputTextData = {
+  register: {
+    name: 'name',
+  },
+  errors: {
+    firstname: { message: 'Message' },
+  },
+};
+
 describe('InputText', () => {
-  const testInvalidName = 'test invalid name';
-  const inputRef: React.RefObject<HTMLInputElement> = React.createRef();
+  const testInvalidName = 'Message';
 
   beforeEach(() => {
-    render(<InputText invalidName={testInvalidName} inputRef={inputRef} />);
+    render(
+      <InputText
+        register={inputTextData.register}
+        errors={inputTextData.errors}
+      />
+    );
   });
 
   it('Should contain correct label', () => {

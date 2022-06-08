@@ -3,19 +3,37 @@ import { screen, render } from '@testing-library/react';
 import { Cards } from './Cards';
 import { CharacterResults } from '../../services/type';
 
-const item: CharacterResults = {
-  image: 'image',
-  species: 'species',
-  name: 'name',
-  id: 1,
-};
+const cardCollection: CharacterResults[] = [
+  {
+    image: 'image',
+    species: 'species',
+    name: 'name',
+    id: 1,
+  },
+  {
+    image: 'image',
+    species: 'species',
+    name: 'name',
+    id: 1,
+  },
+];
 
-// describe('Cards', () => {
-//   beforeEach(() => {
-//     render(<Cards card={item} onToggle={onToggle} />);
-//   });
+jest.mock('../../services/api', () => ({
+  Api: {
+    searchByCharacter: () => {
+      return new Promise((res) => res({ results: cardCollection }));
+    },
+  },
+}));
 
-//   it('count cards', () => {
-//     expect(screen.getAllByTestId('card').length).toBe(data.length);
-//   });
-// });
+const onToggle = jest.fn();
+
+describe('Cards', () => {
+  beforeEach(() => {
+    render(<Cards label="" onToggle={onToggle} />);
+  });
+
+  it('count cards', () => {
+    expect(screen.getAllByTestId('card').length).toBe(cardCollection.length);
+  });
+});

@@ -4,18 +4,20 @@ import styles from './Select.module.scss';
 
 const { title, wrapper, select } = styles;
 
-interface Props {
-  selectRef: React.RefObject<HTMLSelectElement>;
-}
+type selectProps = {
+  register: {
+    name: string;
+  };
+};
 
-export const Select: React.FC<Props> = ({ selectRef }) => {
+export const Select: React.FC<selectProps> = ({ register }) => {
   return (
     <div className={wrapper}>
       <p className={title}>Select country of residence</p>
-      <select className={select} name="country" id="country" ref={selectRef}>
+      <select className={select} id="country" {...register}>
         <option value="Belarus">Belarus</option>
         <option value="Russia">Russia</option>
-        <option value="Ukrain">Ukrain</option>
+        <option value="Ukraine">Ukraine</option>
         <option value="Poland">Poland</option>
         <option value="Another country">Another country</option>
       </select>

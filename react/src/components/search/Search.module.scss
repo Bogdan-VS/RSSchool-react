@@ -9,6 +9,36 @@
   border-radius: 10px;
 }
 
+.subWrapper {
+  max-width: 340px;
+  justify-content: center;
+  padding: 10px;
+  background-color: #4c5a65;
+  margin: 20px auto;
+  border-radius: 10px;
+}
+
+.subWrapper h4 {
+  color: #d3d3d3;
+  margin: 10px;
+  text-align: center;
+}
+
+.subWrapper label {
+  display: flex;
+  align-items: center;
+  color: #b1b1b1;
+}
+
+.genderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.genderContainer input {
+  margin-left: 5px;
+}
+
 .item {
   width: 300px;
   height: 35px;

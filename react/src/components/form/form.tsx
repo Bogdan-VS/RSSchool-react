@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { Card } from './components/Card';
@@ -10,22 +9,18 @@ import { InputRadio } from './components/InputRadio';
 import { InputFile } from './components/InputFile';
 
 import styles from './Form.module.scss';
+import { useGlobalProps } from '../AppContext/AppContext';
+import { FormFiles } from '../AppContext/type';
 
 const { wrapper, formContainer, cardContainer } = styles;
 
-type FormFiles = {
-  firstname: string;
-  date: string;
-  country: string;
-  newsLetter: string;
-  gender: string;
-  file?: FileList;
-  fileUrl?: string;
-};
-
 export const Form = () => {
-  const [cardCollection, setCardCollection] = useState<FormFiles[]>([]);
   const cardId = { id: 100 };
+
+  const {
+    renderPersonalCard,
+    state: { personalDataCollection },
+  } = useGlobalProps();
 
   const {
     register,
@@ -42,7 +37,7 @@ export const Form = () => {
           : 'https://cdn.dribbble.com/users/20883/screenshots/2381093/evgeniy-artsebasov-developer-icon.png';
 
       const currentData = [
-        ...cardCollection,
+        ...personalDataCollection!,
         {
           firstname,
           date,
@@ -53,7 +48,7 @@ export const Form = () => {
         },
       ];
 
-      setCardCollection(currentData);
+      renderPersonalCard!(currentData);
       reset();
     }
   );
@@ -103,7 +98,7 @@ export const Form = () => {
         />
       </form>
       <div className={cardContainer}>
-        {cardCollection.map((items: FormFiles) => {
+        {personalDataCollection!.map((items: FormFiles) => {
           return <Card {...items} key={cardId.id++} />;
         })}
       </div>

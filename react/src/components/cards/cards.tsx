@@ -1,31 +1,49 @@
-import { useEffect, useState } from 'react';
-import styles from './Cards.module.scss';
+import { useEffect } from 'react';
+
 import { Card } from './Card';
 import { Character, CharacterResults } from '../../services/type';
 import { Api } from '../../services/api';
 import { Spinner } from '../Spinner';
+import { useGlobalProps } from '../AppContext/AppContext';
+import { getCorrectDataCards } from './utils';
+
+import styles from './Cards.module.scss';
 
 const { wrapper } = styles;
 
-type CardsProps = {
-  onToggle: (card: CharacterResults) => void;
-  label: string;
-};
-
-export const Cards = ({ onToggle, label }: CardsProps) => {
-  const [character, setCharacter] = useState<CharacterResults[] | null>(null);
+export const Cards = () => {
+  const {
+    renderCards,
+    getInfo,
+    state: {
+      searchProps: { value, male, female, genderless, unknown },
+      cardsCollection,
+      pageNumber,
+    },
+  } = useGlobalProps();
 
   useEffect(() => {
-    Api.searchByCharacter(label).then((body: Character) => {
-      setCharacter(body.results);
-    });
-  }, [label]);
+    setTimeout(() => {
+      Api.searchByCharacter(value, pageNumber).then((body: Character) => {
+        const correctdata: CharacterResults[] = getCorrectDataCards(
+          body.results,
+          male,
+          female,
+          genderless,
+          unknown
+        );
+
+        renderCards!(correctdata.length === 0 ? body.results : correctdata);
+        getInfo!(body.info);
+      });
+    }, 1000);
+  }, [value, male, female, genderless, unknown, pageNumber]);
 
   return (
     <div className={wrapper}>
-      {character ? (
-        character.map((item: CharacterResults) => {
-          return <Card card={item} key={item.id} onToggle={onToggle} />;
+      {cardsCollection ? (
+        cardsCollection.map((item: CharacterResults) => {
+          return <Card card={item} key={item.id} />;
         })
       ) : (
         <Spinner />

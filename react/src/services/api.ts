@@ -22,7 +22,9 @@ export class Api {
     return await Api.getTheOneApi(`${Pages.character}/${id}`);
   };
 
-  static searchByCharacter = async (name: string) => {
-    return await Api.getTheOneApi(`${Pages.character}/?name=${name}`);
+  static searchByCharacter = async (name: string, page: number) => {
+    return await Api.getTheOneApi(
+      `${Pages.character}?page=${page}&name=${name}`
+    );
   };
 }
